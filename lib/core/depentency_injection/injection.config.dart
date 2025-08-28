@@ -16,10 +16,10 @@ import '../navigation/app_router.dart' as _i630;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
-  _i174.GetIt init({
+  Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
-  }) {
+  }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.singleton<_i630.AppRouter>(() => _i630.AppRouter());
     return this;

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'feature/home/presentation/screens/home_screen.dart';
+import 'core/depentency_injection/injection.dart';
+import 'core/navigation/app_router.dart';
 
-void main() {
+main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
+  getIt<AppRouter>().initialize();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -12,6 +16,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: HomeView());
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerConfig: getIt<AppRouter>().router,
+    );
   }
 }

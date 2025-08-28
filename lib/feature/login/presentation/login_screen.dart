@@ -7,8 +7,13 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Column(children: [Text("Sample Go Route Navigation")]),
+    return Scaffold(
+      appBar: AppBar(title: Text("Go Route Sample")),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+
+        children: [Center(child: Text("Sample Go Route Navigation. ${data}"))],
+      ),
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tiverpod_sample_flutter/core/navigation/app_router_path.dart';
 
 import '../controller/jokedata_notifier.dart';
 
@@ -34,8 +36,11 @@ class HomeView extends ConsumerWidget {
             Positioned(
               bottom: 20,
               child: ElevatedButton(
-                onPressed: () =>
-                    ref.read(jokedataNotifierProvider.notifier).getJoke(),
+                onPressed: () {
+                  context.push(AppRouterPaths.login, extra: "Go to HomeScreen");
+                },
+
+                // ref.read(jokedataNotifierProvider.notifier).getJoke(),
                 child: const Text('Get another joke'),
               ),
             ),

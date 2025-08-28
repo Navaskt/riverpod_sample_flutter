@@ -1,22 +1,16 @@
-class Joke {
-  Joke({
-    required this.type,
-    required this.setup,
-    required this.punchline,
-    required this.id,
-  });
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  factory Joke.fromJson(Map<String, Object?> json) {
-    return Joke(
-      type: json['type']! as String,
-      setup: json['setup']! as String,
-      punchline: json['punchline']! as String,
-      id: json['id']! as int,
-    );
-  }
+part 'joke_model.freezed.dart';
+part 'joke_model.g.dart'; // only if you use JSON
 
-  final String type;
-  final String setup;
-  final String punchline;
-  final int id;
+@freezed
+abstract class Joke with _$Joke {
+  const factory Joke({
+    required String type,
+    required String setup,
+    required String punchline,
+    required int id,
+  }) = _Joke;
+
+  factory Joke.fromJson(Map<String, dynamic> json) => _$JokeFromJson(json);
 }

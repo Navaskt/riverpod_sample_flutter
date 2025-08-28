@@ -1,51 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tiverpod_sample_flutter/main.dart';
 
-class HomeView extends StatelessWidget {
+import '../controller/jokedata_notifier.dart';
+
+class HomeView extends ConsumerWidget {
   const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  build(BuildContext context, WidgetRef ref) {
+    final joke = ref.watch(jokedataNotifierProvider);
     return Scaffold(
       appBar: AppBar(title: const Text('Sample Riverpod Application')),
       body: SizedBox.expand(
-        child: Consumer(
-          builder: (context, ref, _) {
-            final randomJoke = ref.watch(randomJokeProvider);
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                if (randomJoke.isRefreshing)
-                  const Positioned(
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    child: LinearProgressIndicator(),
-                  ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            joke.when(
+              loading: () {
+                return const CircularProgressIndicator();
+              },
+              data: (joke) {
+                return SelectableText(
+                  '${joke.setup}\n\n${joke.punchline}',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 24),
+                );
+              },
+              error: (error, stackTrace) {
+                return Container();
+              },
+            ),
 
-                switch (randomJoke) {
-                  AsyncValue(:final value?) => SelectableText(
-                    '${value.setup}\n\n${value.punchline}',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 24),
-                  ),
-                  AsyncValue(error: != null) => const Text(
-                    'Error fetching joke',
-                  ),
-                  AsyncValue() => const CircularProgressIndicator(),
-                },
-
-                Positioned(
-                  bottom: 20,
-                  child: ElevatedButton(
-                    onPressed: () => ref.invalidate(randomJokeProvider),
-                    child: const Text('Get another joke'),
-                  ),
-                ),
-              ],
-            );
-          },
+            Positioned(
+              bottom: 20,
+              child: ElevatedButton(
+                onPressed: () =>
+                    ref.read(jokedataNotifierProvider.notifier).getJoke(),
+                child: const Text('Get another joke'),
+              ),
+            ),
+          ],
         ),
       ),
     );

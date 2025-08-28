@@ -6,7 +6,7 @@ part of 'jokedata_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$jokedataNotifierHash() => r'02a411148f3ed6fd9df88d007f8039c747239a08';
+String _$jokedataNotifierHash() => r'8368eaf5f93981d8bc3299e825065eef18a99232';
 
 /// See also [JokedataNotifier].
 @ProviderFor(JokedataNotifier)
